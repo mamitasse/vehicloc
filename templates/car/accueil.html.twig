@@ -1,0 +1,117 @@
+{# templates/accueil.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Location de voitures à Saint-Étienne – Véhicloc{% endblock %}
+
+{# Bloc pour le grand header vert avec le titre et l’image de la voiture #}
+{% block header_content %}
+<div class="flex-header">
+    <div>
+        <h1>Location de voitures à<br>Saint-Étienne</h1>
+        <p>Un service de location de voitures au mois pour répondre à vos besoins de mobilité.</p>
+    </div>
+    <div>
+        <img src="{{ asset('assets/img/car.png') }}" alt="Voiture Véhicloc">
+    </div>
+</div>
+{% endblock %}
+
+{% block body %}
+<section id="fleet">
+    <h2>Découvrez la flotte de véhicules chez Véhicloc</h2>
+
+    <p>
+        Que vous ayez besoin d'une petite citadine agile, d'une berline élégante ou même d'un SUV spacieux,
+        nous avons une variété de véhicules pour répondre à vos exigences.
+    </p>
+
+    <div class="fleet-list">
+        {% if cars is empty %}
+            <p>Aucune voiture pour le moment. Ajoutez-en une via le bouton “Ajouter une voiture”.</p>
+        {% else %}
+            {% for car in cars %}
+                <article>
+                    <div class="mini-car-title">
+                        <a href="{{ path('app_car_show', {id: car.id}) }}">
+                            <h3>{{ car.name }}</h3>
+                            <p>ou similaire | Saint-Étienne</p>
+                        </a>
+                    </div>
+
+                    <div class="mini-car-icons">
+                        <div>
+                            <img src="{{ asset('assets/icons/persons.png') }}" alt="Nombre de places">
+                            <p>{{ car.places }} places</p>
+                        </div>
+                        <div>
+                            <img src="{{ asset('assets/icons/motor.png') }}" alt="Boîte de vitesse">
+                            <p>
+                                {# si motor est un booléen : true = automatique, false = manuelle #}
+                                {% if car.motor %}
+                                    Automatique
+                                {% else %}
+                                    Manuelle
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div>
+                            <img src="{{ asset('assets/icons/km.png') }}" alt="Kilométrage">
+                            <p>Km illimités</p>
+                        </div>
+                        <div>
+                            <img src="{{ asset('assets/icons/plus.png') }}" alt="Plus">
+                            <p>Voir détails</p>
+                        </div>
+                    </div>
+
+                    <div class="mini-car-price">
+                        <p class="price-per-day">{{ car.dailyPrice }} € / jour</p>
+                        <p class="price-per-month">{{ car.monthlyPrice }} € / mois</p>
+                    </div>
+                </article>
+            {% endfor %}
+        {% endif %}
+    </div>
+</section>
+
+<section id="promises">
+    <div>
+        <h2>La promesse Véhicloc</h2>
+
+        <div class="promise">
+            <img src="{{ asset('assets/icons/insurance.png') }}" alt="Assurance et Assistance">
+            <div>
+                <h3>Assurance et Assistance</h3>
+                <p>
+                    Votre tranquillité d'esprit est notre priorité.
+                    Toutes nos locations mensuelles incluent une assurance complète et une assistance routière.
+                </p>
+            </div>
+        </div>
+
+        <div class="promise">
+            <img src="{{ asset('assets/icons/booking.png') }}" alt="Réservation facile">
+            <div>
+                <h3>Réservation facile</h3>
+                <p>
+                    Réservez votre véhicule en quelques clics et modifiez votre réservation en toute simplicité.
+                </p>
+            </div>
+        </div>
+
+        <div class="promise">
+            <img src="{{ asset('assets/icons/complete.png') }}" alt="Offre complète">
+            <div>
+                <h3>Offre complète</h3>
+                <p>
+                    Une offre claire, sans surprise, avec tout ce dont vous avez besoin pour rouler sereinement.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <img src="{{ asset('assets/img/promise.png') }}" alt="Promesse Véhicloc">
+    </div>
+</section>
+{% endblock %}

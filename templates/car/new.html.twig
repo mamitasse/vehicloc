@@ -1,0 +1,55 @@
+{# templates/car/new.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une voiture - Véhicloc{% endblock %}
+
+{% block body %}
+<section id="add">
+    <a href="{{ path('app_car_index') }}">← Retour</a>
+    <h1>Ajouter une voiture</h1>
+
+    {{ form_start(form) }}
+
+        <div class="input">
+            {{ form_label(form.name, 'Nom de la voiture') }}
+            {{ form_widget(form.name) }}
+            {{ form_errors(form.name) }}
+        </div>
+
+        <div class="input">
+            {{ form_label(form.description, 'Description') }}
+            {{ form_widget(form.description) }}
+            {{ form_errors(form.description) }}
+        </div>
+
+        <div class="flex-input">
+            <div class="input">
+                {{ form_label(form.monthlyPrice, 'Prix mensuel') }}
+                {{ form_widget(form.monthlyPrice) }}
+                {{ form_errors(form.monthlyPrice) }}
+            </div>
+            <div class="input">
+                {{ form_label(form.dailyPrice, 'Prix journalier') }}
+                {{ form_widget(form.dailyPrice) }}
+                {{ form_errors(form.dailyPrice) }}
+            </div>
+        </div>
+
+        <div class="flex-input">
+            <div class="input">
+                {{ form_label(form.places, 'Nombre de places') }}
+                {{ form_widget(form.places) }}
+                {{ form_errors(form.places) }}
+            </div>
+            <div class="input">
+                {{ form_label(form.motor, 'Boîte de vitesse') }}
+                {{ form_widget(form.motor) }}
+                {{ form_errors(form.motor) }}
+            </div>
+        </div>
+
+        <button class="btn-add">Ajouter</button>
+
+    {{ form_end(form) }}
+</section>
+{% endblock %}

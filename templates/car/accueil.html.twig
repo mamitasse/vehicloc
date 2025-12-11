@@ -36,6 +36,11 @@
                             <h3>{{ car.name }}</h3>
                             <p>ou similaire | Saint-Étienne</p>
                         </a>
+                        <a href="{{ path('app_car_delete', { id: car.id }) }}"
+               onclick="return confirm('Supprimer cette voiture ?')">
+                <img src="{{ asset('assets/icons/trash.png') }}" alt="Supprimer">
+            </a>
+
                     </div>
 
                     <div class="mini-car-icons">

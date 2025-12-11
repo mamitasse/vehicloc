@@ -71,15 +71,27 @@ final class CarController extends AbstractController
         ]);
     }
 
-    // DELETE /car/{id}
-    #[Route('/car/{id}', name: 'app_car_delete', methods: ['POST'])]
-    public function delete(Request $request, Car $car, EntityManagerInterface $entityManager): Response
+    
+    // DELETE : /voiture/{id}/supprimer
+    #[Route('/voiture/{id}/supprimer', name: 'app_car_delete', methods: ['GET'])]
+    public function delete(int $id, CarRepository $carRepository, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $car->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($car);
-            $entityManager->flush();
+        // 1. On récupère la voiture par son id
+        $car = $carRepository->find($id);
+
+        // 2. Si aucune voiture trouvée → on retourne à l’accueil
+        if (!$car) {
+            // tu peux ajouter un flash si tu veux informer l’utilisateur
+            // $this->addFlash('warning', 'Cette voiture n’existe pas.');
+            return $this->redirectToRoute('app_car_index');
         }
 
-        return $this->redirectToRoute('app_car_index', [], Response::HTTP_SEE_OTHER);
+        // 3. On supprime la voiture
+        $entityManager->remove($car);
+        $entityManager->flush();
+
+        // 4. On retourne sur la page d’accueil
+        // $this->addFlash('success', 'La voiture a bien été supprimée.');
+        return $this->redirectToRoute('app_car_index');
     }
 }
